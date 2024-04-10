@@ -322,7 +322,7 @@ export function addFilter<T>(
 
     const filterEntries = Object.entries(filter)
     const orFilters = filterEntries.filter(([_, value]) => value.some((v) => v.comparator === '$or'))
-    const andFilters = filterEntries.filter(([_, value]) => value.some((v) => v.comparator !== '$or'))
+    const andFilters = filterEntries.filter(([_, value]) => value.every((v) => v.comparator !== '$or'))
 
     qb.andWhere(
         new Brackets((qb: SelectQueryBuilder<T>) => {
