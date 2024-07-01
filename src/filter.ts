@@ -327,7 +327,9 @@ export function addFilter<T>(
     qb.andWhere(
         new Brackets((qb: SelectQueryBuilder<T>) => {
             for (const [column] of orFilters) {
-                addWhereCondition(qb, column, filter)
+                qb.andWhere(new Brackets((qb: SelectQueryBuilder<T>) => {
+                    addWhereCondition(qb, column, filter)
+                }))
             }
         })
     )
@@ -335,7 +337,9 @@ export function addFilter<T>(
     qb.andWhere(
         new Brackets((qb: SelectQueryBuilder<T>) => {
             for (const [column] of andFilters) {
-                addWhereCondition(qb, column, filter)
+                qb.andWhere(new Brackets((qb: SelectQueryBuilder<T>) => {
+                    addWhereCondition(qb, column, filter)
+                }))
             }
         })
     )
